@@ -29,7 +29,8 @@ def stage_reference_metadata(dataset_path):
 
     annotations_source = DATA_REF_ROOT / "annotations"
     annotations_destination = dataset_path / "annotations"
-    if annotations_source.exists():
+    same_dir = annotations_destination.exists() and annotations_destination.samefile(annotations_source)
+    if annotations_source.exists() and not same_dir:
         if annotations_destination.exists():
             shutil.rmtree(annotations_destination)
         shutil.copytree(annotations_source, annotations_destination)
@@ -128,7 +129,7 @@ def prepare_market(dataset_path):
 
 def prepare_pa100k(dataset_path):
     # PA-100K dataset
-    pa100k_raw_path = dataset_path / "PA100k"
+    pa100k_raw_path = dataset_path / "pa100k_download"
     pa100k_raw_path.mkdir(parents=True, exist_ok=True)
     pa100k_release_path = pa100k_raw_path / "release_data" / "release_data"
     pa100k_path = dataset_path / "pa100k"
@@ -150,7 +151,7 @@ def prepare_pa100k(dataset_path):
 
 def prepare_peta(dataset_path):
     # PETA dataset
-    peta_raw_path = dataset_path / "PETA"
+    peta_raw_path = dataset_path / "peta_download"
     peta_path = dataset_path / "peta"
     if peta_path.exists():
         nested_raw_path = peta_path / "PETA dataset"
@@ -175,7 +176,8 @@ def prepare_peta(dataset_path):
         for file in tqdm(peta_raw_path.glob("*/*/*/*")):
             if file.suffix == ".txt":
                 continue
-            destination_file = dataset_path / mapping[str(PurePosixPath(file)).replace(str(dataset_path) + "/", "")]
+            source = "PETA/" + file.relative_to(peta_raw_path).as_posix()
+            destination_file = peta_path / "images" / PurePosixPath(mapping[source]).name
             destination_file.parent.mkdir(parents=True, exist_ok=True)
             shutil.move(file, destination_file)
     if peta_raw_path.exists():
@@ -196,8 +198,8 @@ def prepare_datasets(path):
     for leftover in [
         dataset_path / "Market1501",
         dataset_path / "Market-1501-v15.09.15",
-        dataset_path / "PA100k",
-        dataset_path / "PETA",
+        dataset_path / "pa100k_download",
+        dataset_path / "peta_download",
         dataset_path / "market_1501.zip",
     ]:
         if leftover.is_dir():

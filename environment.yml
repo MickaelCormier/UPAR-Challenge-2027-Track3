@@ -7,6 +7,7 @@ dependencies:
   - pillow
   - tqdm
   - requests
+  - gdown
   - pytorch
   - torchvision
   - pip
