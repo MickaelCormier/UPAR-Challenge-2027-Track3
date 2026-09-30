@@ -1,0 +1,14 @@
+name: rws-upar-track3
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy
+  - pillow
+  - tqdm
+  - requests
+  - pytorch
+  - torchvision
+  - pip
+  - pip:
+      - transformers

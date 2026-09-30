@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+
+examples/task3/vitpose_submission/assets/*
+*.zip
