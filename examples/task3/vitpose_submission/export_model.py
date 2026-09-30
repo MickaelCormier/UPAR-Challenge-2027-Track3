@@ -8,7 +8,6 @@ import torch
 
 HERE = Path(__file__).resolve().parent
 ASSETS = HERE / "assets"
-PRIOR_SOURCE = (HERE.parent / "sample_code_submission" / "assets" / "mean_pose.json")
 
 # COCO is dataset index 0 in the ViTPose+ mixture-of-experts head
 COCO_DATASET_INDEX = 0
@@ -72,10 +71,6 @@ def main() -> int:
     }
     (ASSETS / "preprocess.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
     print(f"[*] wrote {ASSETS / 'preprocess.json'}")
-
-    if PRIOR_SOURCE.is_file():
-        (ASSETS / "mean_pose.json").write_bytes(PRIOR_SOURCE.read_bytes())
-        print(f"[*] copied fallback prior from {PRIOR_SOURCE.name}")
 
     reloaded = torch.jit.load(args.out, map_location="cpu")
     out = reloaded(example)

@@ -25,7 +25,6 @@ absolute image coordinates.
 
 ## What this repo contains
 
-- `examples/task3/sample_code_submission/`: minimal baseline submission using a mean pose prior
 - `examples/task3/vitpose_submission/`: ViTPose-based example submission
 - `data/`: expected location for the released Track 3 training and validation data
 - `download_datasets.py`: downloads the public datasets and prepares the expected local data layout
@@ -71,12 +70,10 @@ submission predicts 17 keypoints for each box. The competition format keeps 17
 PoseTrack18 slots for compatibility; the ear slots remain in the format but are
 not annotated in the ground truth and are ignored by scoring.
 
-## Example submissions
+## Example submission
 
-The repository ships two Track 3 code submissions:
-
-1. `examples/task3/sample_code_submission/`: minimal baseline using a mean pose prior
-2. `examples/task3/vitpose_submission/`: ViTPose+ small example for a stronger starting point
+The repository ships one Track 3 code submission:
+`examples/task3/vitpose_submission/`, a ViTPose+ small example for a stronger starting point.
 
 To prepare the ViTPose example once on your machine:
 
